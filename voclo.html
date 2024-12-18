@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up & Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            background-image: url("image.jpg"); /* Background image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+        header {
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffd700;
+        }
+        .container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 360px;
+            text-align: center;
+            margin: 20px auto;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none;
+        }
+        p {
+            text-align: center;
+            margin-top: 15px;
+            color: #333;
+        }
+        p a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+        #passwordError {
+            color: red;
+            font-size: 12px;
+            display: none;
+            text-align: left;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>Voice Cloning and Mimicking System</header>
+    <nav>
+        <a href="#">About</a>
+        <a href="#">Help</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Sign Up Form -->
+        <div class="container" id="signupContainer">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <input type="text" id="signupUsername" placeholder="Username" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <span id="passwordError"></span>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="container hidden" id="loginContainer">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Forgot your password? <a href="#" onclick="showForgotPassword()">Reset it here</a></p>
+            <p>Don't have an account? <a href="#" onclick="showSignup()">Sign Up here</a></p>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div class="container hidden" id="forgotPasswordContainer">
+            <h2>Forgot Password</h2>
+            <form id="forgotPasswordForm">
+                <input type="text" id="forgotUsername" placeholder="Username" required>
+                <input type="password" id="newPassword" placeholder="New Password" required>
+                <button type="submit">Reset Password</button>
+            </form>
+            <p>Remembered your password? <a href="#" onclick="showLogin()">Login here</a></p>
+        </div>
+
+        <!-- Welcome Page -->
+        <div class="container hidden" id="welcomeContainer">
+            <h2>Welcome to Voice Cloning and Mimicking System</h2>
+            <button onclick="alert('Voice Cloning Started')">Clone a Voice</button>
+            <button onclick="alert('Choose a Cloned Voice')">Choose a Cloned Voice</button>
+        </div>
+    </div>
+
+    <script>
+        const users = {};
+
+        // Show Login Form
+        function showLogin() {
+            document.getElementById('signupContainer').classList.add('hidden');
+            document.getElementById('forgotPasswordContainer').classList.add('hidden');
+            document.getElementById('loginContainer').classList.remove('hidden');
+        }
+
+        // Show Signup Form
+        function showSignup() {
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('forgotPasswordContainer').classList.add('hidden');
+            document.getElementById('signupContainer').classList.remove('hidden');
+        }
+
+        // Show Forgot Password Form
+        function showForgotPassword() {
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('signupContainer').classList.add('hidden');
+            document.getElementById('forgotPasswordContainer').classList.remove('hidden');
+        }
+
+        // Show Welcome Page
+        function showWelcomePage() {
+            document.getElementById('signupContainer').classList.add('hidden');
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('forgotPasswordContainer').classList.add('hidden');
+            document.getElementById('welcomeContainer').classList.remove('hidden');
+        }
+
+        // Handle Signup Form Submission
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+            const passwordError = document.getElementById('passwordError');
+
+            const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+
+
+            if (!strongPasswordRegex.test(password)) {
+                passwordError.textContent =
+                    'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.';
+                passwordError.style.display = 'block';
+                return;
+            } else {
+                passwordError.style.display = 'none';
+            }
+
+            if (users[username]) {
+                alert('User already exists. Please log in.');
+            } else {
+                users[username] = { password };
+                alert('Sign up successful! Please log in.');
+                showLogin();
+            }
+        });
+
+        // Handle Login Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (users[username] && users[username].password === password) {
+                alert('Login successful!');
+                showWelcomePage();
+            } else {
+                alert('Invalid username or password.');
+            }
+        });
+    </script>
+</body>
+</html>
